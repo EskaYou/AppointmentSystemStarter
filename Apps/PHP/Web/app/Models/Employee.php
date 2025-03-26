@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Employee extends Model
 {
-    protected $fillable = ["is_present", "user_id"];
+    protected $fillable = ["is_present", "user_id", "employee_type_id"];
 
     public function users(): BelongsTo
     {
@@ -18,5 +18,10 @@ class Employee extends Model
     public function appointments(): BelongsToMany
     {
         return $this->belongsToMany(Appointment::class);
+    }
+
+    public function employee_type(): BelongsTo
+    {
+        return $this->belongsTo(EmployeeType::class, "employee_type_id");
     }
 }

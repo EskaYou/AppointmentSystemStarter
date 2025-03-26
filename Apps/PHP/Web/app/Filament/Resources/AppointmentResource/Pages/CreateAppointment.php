@@ -9,9 +9,4 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateAppointment extends CreateRecord
 {
     protected static string $resource = AppointmentResource::class;
-
-    protected function beforeCreate()
-    {
-        //dd($this->data);
-    }
 }

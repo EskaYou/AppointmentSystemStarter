@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('employee_types', function (Blueprint $table) {
             $table->id();
-            $table->timestamp("starts_at");
-            $table->timestamp("ends_at");
-            $table->boolean("is_running")->default(false);
-            $table->boolean("is_canceled")->default(false);
-            $table->boolean("done")->default(false);
-            $table->text("note")->nullable();
+            $table->string("type_name", 20);
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('employee_types');
     }
 };

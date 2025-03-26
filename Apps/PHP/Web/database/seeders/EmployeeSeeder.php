@@ -14,23 +14,24 @@ class EmployeeSeeder extends Seeder
     public function run(): void
     {
         DB::table("employees")->insert([
-            "user_id" => 1
+            "user_id" => 1,
+            "employee_type_id" => 1
         ]);
 
-        DB::table("employees")->insert([
-            "user_id" => 2
-        ]);
+        // DB::table("employees")->insert([
+        //     "user_id" => 2
+        // ]);
 
-        DB::table("employees")->insert([
-            "user_id" => 3
-        ]);
+        // DB::table("employees")->insert([
+        //     "user_id" => 3
+        // ]);
 
-        DB::table("employees")->insert([
-            "user_id" => 4
-        ]);
+        // DB::table("employees")->insert([
+        //     "user_id" => 4
+        // ]);
 
-        DB::table("employees")->insert([
-            "user_id" => 5
-        ]);
+        // DB::table("employees")->insert([
+        //     "user_id" => 5
+        // ]);
     }
 }

@@ -41,7 +41,9 @@ class UserResource extends Resource
                     ->relationship("employee")
                     ->schema([
                         Forms\Components\Checkbox::make("is_present")
-                            ->default(false)
+                            ->default(false),
+                        Forms\Components\Select::make("employee_type_id")
+                            ->relationship("employee_type", "type_name")
                     ])
             ]);
     }
@@ -62,7 +64,8 @@ class UserResource extends Resource
                             }
                         }
                         return "Unavailable";
-                    })
+                    }),
+                Tables\Columns\TextColumn::make("employee.employee_type.type_name")
             ])
             ->filters([
                 //

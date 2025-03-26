@@ -19,6 +19,12 @@ return new class extends Migration
             $table->foreign("user_id")->references("id")->on("users")
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+
+            $table->integer("employee_type_id");
+            $table->foreign("employee_type_id")->references("id")->on("employee_types")
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+
             $table->timestamps();
         });
     }
