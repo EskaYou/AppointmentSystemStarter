@@ -28,9 +28,13 @@ class AppointmentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\DateTimePicker::make("starts_at")
-                    ->required(),
+                    ->seconds(false)
+                    ->required()
+                    ->timezone("Asia/Singapore"),
                 Forms\Components\DateTimePicker::make("ends_at")
-                    ->required(),
+                    ->seconds(false)
+                    ->required()
+                    ->timezone("Asia/Singapore"),
                 Forms\Components\Select::make("clients")
                     ->relationship("clients", "name")
                     ->preload()
@@ -57,8 +61,12 @@ class AppointmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make("id")->sortable(),
-                Tables\Columns\TextColumn::make("starts_at"),
-                Tables\Columns\TextColumn::make("ends_at"),
+                Tables\Columns\TextColumn::make("starts_at")
+                    ->dateTime()
+                    ->timezone("Asia/Singapore"),
+                Tables\Columns\TextColumn::make("ends_at")
+                    ->dateTime()
+                    ->timezone("Asia/Singapore"),
             ])
             ->filters([
                 //
