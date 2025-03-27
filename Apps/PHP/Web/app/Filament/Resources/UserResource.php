@@ -46,6 +46,7 @@ class UserResource extends Resource
                             ->default(false),
                         Forms\Components\Select::make("employee_type_id")
                             ->relationship("employee_type", "type_name")
+                            ->required()
                     ])
             ]);
     }

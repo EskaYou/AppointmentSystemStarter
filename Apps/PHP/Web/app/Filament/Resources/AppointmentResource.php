@@ -73,11 +73,14 @@ class AppointmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make("id")->sortable(),
+                Tables\Columns\TextColumn::make("id")->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make("starts_at")
+                    ->searchable()
                     ->dateTime()
                     ->timezone("Asia/Singapore"),
                 Tables\Columns\TextColumn::make("ends_at")
+                    ->searchable()
                     ->dateTime()
                     ->timezone("Asia/Singapore"),
             ])
