@@ -51,7 +51,20 @@ class AppointmentResource extends Resource
                         return $model->users->name;
                     })
                     ->preload()
-                    ->multiple()
+                    ->multiple(),
+            
+                Forms\Components\Fieldset::make("Status")
+                    ->schema([
+                        Forms\Components\Checkbox::make("done"),
+                        Forms\Components\Checkbox::make("is_canceled"),
+                    ])
+                    ->hidden(function(string $operation){
+                        if($operation === "edit")
+                        {
+                            return false;
+                        }
+                        return true;
+                    }),
                 
             ]);
     }
