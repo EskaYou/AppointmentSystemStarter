@@ -16,7 +16,8 @@ class Appointment extends Model
         "ends_at",
         "is_running",
         "is_canceled",
-        "done"
+        "done",
+        "note"
     ];
 
     public function services(): BelongsToMany

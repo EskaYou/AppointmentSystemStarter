@@ -33,6 +33,7 @@ class AppointmentResource extends Resource
                     ->timezone("Asia/Singapore"),
                 Forms\Components\DateTimePicker::make("ends_at")
                     ->seconds(false)
+                    ->afterOrEqual("starts_at")
                     ->required()
                     ->timezone("Asia/Singapore"),
                 Forms\Components\Select::make("clients")
@@ -52,6 +53,8 @@ class AppointmentResource extends Resource
                     })
                     ->preload()
                     ->multiple(),
+
+                Forms\Components\Textarea::make("note"),
             
                 Forms\Components\Fieldset::make("Status")
                     ->schema([
