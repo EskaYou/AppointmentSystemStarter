@@ -32,6 +32,7 @@ class UserResource extends Resource
                     ->maxLength(100),
                 Forms\Components\TextInput::make("email")
                     ->email()
+                    ->unique(table: "users", column: "email", ignoreRecord: true)
                     ->required(),
                 Forms\Components\TextInput::make("password")
                     ->password()
