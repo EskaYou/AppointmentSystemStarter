@@ -5,16 +5,27 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AppointmentResource\Pages;
 use App\Filament\Resources\AppointmentResource\RelationManagers;
 use App\Models\Appointment;
+use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Grid as ComponentsGrid;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Layout\Grid;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use GuzzleHttp\ClientInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Livewire\Attributes\Layout;
 use Schema;
 
 class AppointmentResource extends Resource
@@ -30,12 +41,12 @@ class AppointmentResource extends Resource
                 Forms\Components\DateTimePicker::make("starts_at")
                     ->seconds(false)
                     ->required()
-                    ->timezone("Asia/Singapore"),
+                    ->timezone(env("CLIENT_DATETIME_TIMEZONE")),
                 Forms\Components\DateTimePicker::make("ends_at")
                     ->seconds(false)
                     ->afterOrEqual("starts_at")
                     ->required()
-                    ->timezone("Asia/Singapore"),
+                    ->timezone(env("CLIENT_DATETIME_TIMEZONE")),
                 Forms\Components\Select::make("clients")
                     ->relationship("clients", "name")
                     ->preload()
@@ -81,15 +92,30 @@ class AppointmentResource extends Resource
                 Tables\Columns\TextColumn::make("starts_at")
                     ->searchable()
                     ->dateTime()
-                    ->timezone("Asia/Singapore"),
+                    ->timezone(env("CLIENT_DATETIME_TIMEZONE")),
                 Tables\Columns\TextColumn::make("ends_at")
                     ->searchable()
                     ->dateTime()
-                    ->timezone("Asia/Singapore"),
-            ])
+                    ->timezone(env("CLIENT_DATETIME_TIMEZONE")),
+            ])->defaultSort("created_at", 'desc')
             ->filters([
-                //
-            ])
+                Filter::make("starts_at")
+                    ->form([
+                        DatePicker::make("starts_at")->timezone("Asia/Singapore")
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data["starts_at"], 
+                            function(Builder $query, $date): Builder {                    
+                                $start = Carbon::parse($date, env("CLIENT_DATETIME_TIMEZONE"))->startOfDay()->setTimezone(config("app.timezone"));
+                                $end = Carbon::parse($date, env("CLIENT_DATETIME_TIMEZONE"))->endOfDay()->setTimezone(config("app.timezone"));
+                                $q = $query
+                                    ->where("starts_at", ">=", $start, "and")
+                                    ->where("starts_at", "<=", $end);
+                                return $q;
+                        });
+                    })
+            ], layout: FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
