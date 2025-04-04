@@ -3,30 +3,21 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AppointmentResource\Pages;
-use App\Filament\Resources\AppointmentResource\RelationManagers;
 use App\Models\Appointment;
+use App\Models\Employee;
+use App\Models\EmployeeType;
 use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Grid as ComponentsGrid;
 use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\Layout\Grid;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use GuzzleHttp\ClientInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Livewire\Attributes\Layout;
-use Schema;
 
 class AppointmentResource extends Resource
 {
@@ -66,8 +57,10 @@ class AppointmentResource extends Resource
                     ->multiple()
                     ->required(),
                 Forms\Components\Select::make("employees")
-                    ->relationship("employees")
-                    ->getOptionLabelFromRecordUsing(function (Model $model){
+                    ->relationship("employees", modifyQueryUsing: function(Builder $query){
+                        return $query->leftJoinRelationship("employee_type")->where("type_name", "=", "admin");
+                    })
+                    ->getOptionLabelFromRecordUsing(function (Model $model): string {
                         return $model->users->name;
                     })
                     ->preload()
