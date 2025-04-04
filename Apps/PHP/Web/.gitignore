@@ -23,3 +23,11 @@ yarn-error.log
 /.zed
 run_seeder.bat
 _ide_helper.php
+
+app/Contracts/
+app/Filament/Pages/
+app/Livewire/
+app/Services/
+resources/views/filament/
+resources/views/livewire/
+app/Providers/AppServiceProvider.php

@@ -41,12 +41,20 @@ class AppointmentResource extends Resource
                 Forms\Components\DateTimePicker::make("starts_at")
                     ->seconds(false)
                     ->required()
-                    ->timezone(env("CLIENT_DATETIME_TIMEZONE")),
+                    ->timezone(env("CLIENT_DATETIME_TIMEZONE"))
+                    ->dehydrateStateUsing(function(string $state): string{
+                        $date_format = Carbon::parse($state, env("CLIENT_DATETIME_TIMEZONE"));
+                        return $date_format->timezone("UTC")->toDateTimeString();
+                    }),
                 Forms\Components\DateTimePicker::make("ends_at")
                     ->seconds(false)
                     ->afterOrEqual("starts_at")
                     ->required()
-                    ->timezone(env("CLIENT_DATETIME_TIMEZONE")),
+                    ->timezone(env("CLIENT_DATETIME_TIMEZONE"))
+                    ->dehydrateStateUsing(function(string $state): string{
+                        $date_format = Carbon::parse($state, env("CLIENT_DATETIME_TIMEZONE"));
+                        return $date_format->timezone("UTC")->toDateTimeString();
+                    }),
                 Forms\Components\Select::make("clients")
                     ->relationship("clients", "name")
                     ->preload()
@@ -101,7 +109,7 @@ class AppointmentResource extends Resource
             ->filters([
                 Filter::make("starts_at")
                     ->form([
-                        DatePicker::make("starts_at")->timezone("Asia/Singapore")
+                        DatePicker::make("starts_at")->timezone(env("CLIENT_DATETIME_TIMEZONE"))
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query->when(

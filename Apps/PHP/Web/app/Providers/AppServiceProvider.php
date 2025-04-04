@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Contracts\IFilterAppointment;
 use App\Models\Appointment;
 use App\Policies\ServicePolicy;
 use Illuminate\Support\Facades\Gate;
@@ -10,6 +11,7 @@ use App\Models\Service;
 use App\Models\User;
 use App\Policies\AppointmentPolicy;
 use App\Policies\UserPolicy;
+use App\Services\AppointmentFilterServiceSqlite;
 
 class AppServiceProvider extends ServiceProvider
 {
