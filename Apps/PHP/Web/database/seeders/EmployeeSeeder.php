@@ -17,21 +17,5 @@ class EmployeeSeeder extends Seeder
             "user_id" => 1,
             "employee_type_id" => 1
         ]);
-
-        // DB::table("employees")->insert([
-        //     "user_id" => 2
-        // ]);
-
-        // DB::table("employees")->insert([
-        //     "user_id" => 3
-        // ]);
-
-        // DB::table("employees")->insert([
-        //     "user_id" => 4
-        // ]);
-
-        // DB::table("employees")->insert([
-        //     "user_id" => 5
-        // ]);
     }
 }

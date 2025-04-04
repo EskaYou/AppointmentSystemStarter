@@ -20,9 +20,5 @@ class EmployeeTypeSeeder extends Seeder
         DB::table("employee_types")->insert([
             "type_name" => "admin"
         ]);
-
-        DB::table("employee_types")->insert([
-            "type_name" => "user"
-        ]);
     }
 }
