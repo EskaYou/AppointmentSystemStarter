@@ -31,3 +31,4 @@ app/Services/
 resources/views/filament/
 resources/views/livewire/
 app/Providers/AppServiceProvider.php
+database/seeders
