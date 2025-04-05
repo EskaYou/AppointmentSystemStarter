@@ -43,8 +43,6 @@ class UserResource extends Resource
                 Forms\Components\Section::make()
                     ->relationship("employee")
                     ->schema([
-                        Forms\Components\Checkbox::make("is_present")
-                            ->default(false),
                         Forms\Components\Select::make("employee_type_id")
                             ->relationship("employee_type", "type_name")
                             ->required()
@@ -58,17 +56,6 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make("name"),
                 Tables\Columns\TextColumn::make("email"),
-                Tables\Columns\TextColumn::make("employee.is_present")
-                    ->getStateUsing(function (Model $record): string {
-                        if($record->employee)
-                        {
-                            if($record->employee->is_present)    
-                            {
-                                return "Available";
-                            }
-                        }
-                        return "Unavailable";
-                    }),
                 Tables\Columns\TextColumn::make("employee.employee_type.type_name")
             ])
             ->filters([

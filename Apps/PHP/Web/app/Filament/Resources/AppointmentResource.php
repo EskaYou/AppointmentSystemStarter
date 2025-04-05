@@ -50,7 +50,19 @@ class AppointmentResource extends Resource
                     ->relationship("clients", "name")
                     ->preload()
                     ->multiple()
-                    ->required(),
+                    ->required()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make("name")
+                            ->required()
+                            ->maxLength(100),
+                        Forms\Components\TextInput::make("email")
+                            ->required()
+                            ->email()
+                            ->maxLength(100),
+                        Forms\Components\TextInput::make("phone_number")
+                            ->required()
+                            ->maxLength(12),
+                    ])->required(),
                 Forms\Components\Select::make("services")
                     ->relationship("services", "service_name")
                     ->preload()
