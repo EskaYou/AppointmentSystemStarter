@@ -45,6 +45,6 @@ The app was made using PHP, Laravel framework, and Filament. To run the applicat
 8. The app can be accessed at <code>localhost:8000</code>
 9. By default the app has one user of type manager, you can use this user to login to the system<br/>
 ```
-  Email: admin@testmail.com
+  Email: user1@testmail.com
   Password: 1
 ```
