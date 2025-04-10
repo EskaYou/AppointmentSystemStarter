@@ -25,7 +25,7 @@ run_seeder.bat
 _ide_helper.php
 
 app/Contracts/
-app/Filament/Pages/
+app/Filament/Pages/Filters.php
 app/Livewire/
 app/Services/
 resources/views/filament/
